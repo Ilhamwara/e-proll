@@ -1,8 +1,8 @@
-<script>  
-  $(document).ready(function() {  
+<script>
+  $(document).ready(function() {
 
     var oTable = $('#programsTable').DataTable({
-      'ajax': { 
+      'ajax': {
           "url": '<?php echo site_url('programs/controller_gridlist')?>',
           "type": 'POST'
       },
@@ -22,9 +22,16 @@
       'order': [[1, 'asc']]
    });
 
-    //console.log(oTable); 
-    
-    $('#test').on('click', function() {        
+    //console.log(oTable);
+
+    $('#programsTable').on('click', '.btn-edit', function(e) {
+
+        console.log($(this).closest('tr').find('.primarykey').text());
+        return false;
+
+    });
+
+    $('#test').on('click', function() {
       var rows_selected = oTable.column(0).checkboxes.selected();
         // Iterate over all selected checkboxes
       $.each(rows_selected, function(index, rowId){
@@ -32,16 +39,16 @@
           console.log(rowId);
       });
 
-    })    
-   
+    })
+
   });
-</script>  
+</script>
 
 <style>
-  
+
 </style>
 
-<!-- BEGIN PAGE CONTENT-->        
+<!-- BEGIN PAGE CONTENT-->
 <div class="row">
   <div class="col-md-12">
     <div class="portlet light">
@@ -60,29 +67,67 @@
                 <a id='test' href="javascript:;"> Export </a>
               </li>
               <li>
-                <a href="javascript:;"></i> Delete </a> 
+                <a href="javascript:;"></i> Delete </a>
               </li>
             </ul>
           </div>
-        </div>        
+        </div>
       </div>
-      <div class="portlet-body" style="display: block;">       
+      <div class="portlet-body form collapse" id="form-collapse">
+        <!-- BEGIN FORM -->
+        <form id="form" action ="#" class="form-horizontal">
+          <div class="form-body">
+            <div class="form-group">
+              <label class="col-md-2 control-label">ID</label>
+              <div class="col-md-4">
+                <input id="program_id" type="text" class="form-control" placeholder="[auto_generate]">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-2 control-label">Group Name</label>
+              <div class="col-md-4">
+                <input id="program_group_id" type="text" class="form-control" placeholder="Auto..">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-2 control-label">Program Title </label>
+              <div class="col-md-4">
+                <input id="program_title" type="text" class="form-control" placeholder="Nama Program">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-2 control-label">Program URL</label>
+              <div class="col-md-4">
+                <input id="program_url" type="text" class="form-control" placeholder="Class/Method">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-2 control-label">Program Class</label>
+              <div class="col-md-4">
+                <input id="program_class" type="text" class="form-control" placeholder="Class Name">
+              </div>
+            </div>
+          </div>
+        </form>
+        <!-- END FORM -->
+      </div>
+      <div class="portlet-body" style="display: block;">
         <table class="table table-hover text-nowrap" id='programsTable' cellspacing=0 width="100%">
           <thead>
-            <tr role="row" class="heading">                   
+            <tr role="row" class="heading">
               <th></th>
+              <th width="50px">Edit</div></th>
               <th width="80px">ID</th>
               <th width="80px">Group Name</th>
               <th width="100px">Program Title</th>
               <th width="80px">Program URL</th>
               <th width="100px">Program Ico</th>
               <th width="100px">Program Class</th>
-              <th width="50px">Edit</div></th>
-            </tr>              
+            </tr>
           </thead>
           <tbody>
           </tbody>
-        </table>                                                        
+        </table>
       </div>
     </div>
   </div>
