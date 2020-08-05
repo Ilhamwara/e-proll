@@ -63,7 +63,7 @@ class Programs extends CI_Controller{
         $this->load->view("admin/o_header");
         $this->load->view("programs/programs_list");
         $this->load->view("admin/o_footer");
-
+        $this->load->view("programs/programs_js");
     }
 
     function controller_gridlist(){
@@ -245,99 +245,6 @@ class Programs extends CI_Controller{
         $result = $record[0]->$name;
 
         return $result;
-    }
-
-    function divisi_select(){
-
-        $this->template_model->set_table('master_divisi');
-
-        $rDivisi = $this->template_model->get('');
-        $options    = array('' => '');
-        foreach($rDivisi->result() as $key => $value){
-            $options[$value->divisi_id]= $value->divisi_name;
-        }
-
-        return $options;
-    }
-
-    function jabatan_select(){
-
-        $this->template_model->set_table('master_jabatan');
-
-        $rJabatan = $this->template_model->get('');
-        $options    = array('' => '');
-        foreach($rJabatan->result() as $key => $value){
-            $options[$value->jabatan_id]= $value->jabatan_name;
-        }
-
-        return $options;
-    }
-
-    function golongan_select(){
-
-        $this->template_model->set_table('master_gol');
-
-        $rGolongan = $this->template_model->get('');
-        $options    = array('' => '');
-        foreach($rGolongan->result() as $key => $value){
-            $options[$value->gol_id]= $value->gol_name;
-        }
-
-        return $options;
-    }
-
-    function sex_select(){
-
-        $options['pria'] = 'PRIA';
-        $options['wanita'] = 'WANITA';
-
-        return $options;
-    }
-
-    function agama_select(){
-
-        $options['islam'] = 'Islam';
-        $options['kristen'] = 'Kristen';
-        $options['katolik'] = 'Katolik';
-        $options['hindu'] = 'Hindu';
-        $options['buddha'] = 'Buddha';
-        $options['konghucu'] = 'Konghucu';
-
-        return $options;
-    }
-
-    function status_select(){
-
-        $options['single'] = 'Lajang';
-        $options['married'] = 'Menikah';
-
-        return $options;
-    }
-
-    function spajak_select(){
-
-        $this->template_model->set_table('master_spajak');
-
-        $rSpajak = $this->template_model->get('');
-        $options = array('' => '');
-        foreach($rSpajak->result() as $key => $value){
-            $options[$value->spajak_id]= $value->spajak_name;
-        }
-
-        return $options;
-    }
-
-    function bank_select(){
-
-        $this->template_model->set_table('master_bank');
-
-        $rBank = $this->template_model->get('');
-        $options = array('' => '');
-        foreach($rBank->result() as $key => $value){
-            $options[$value->bank_id]= $value->bank_name;
-        }
-
-        return $options;
     }
 
 }
