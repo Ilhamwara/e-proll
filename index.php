@@ -193,7 +193,7 @@ switch (ENVIRONMENT)
 	// Set the current directory correctly for CLI requests
 	if (defined('STDIN'))
 	{
-		chdir(dirname(__FILE__));		
+		chdir(dirname(__FILE__));
 	}
 
 	if (($_temp = realpath($system_path)) !== FALSE)
@@ -212,7 +212,7 @@ switch (ENVIRONMENT)
 
 	// Is the system path correct?
 	if ( ! is_dir($system_path))
-	{		
+	{
 		header('HTTP/1.1 503 Service Unavailable.', TRUE, 503);
 		echo 'Your system folder path does not appear to be set correctly. Please open the following file and correct this: '.pathinfo(__FILE__, PATHINFO_BASENAME);
 		exit(3); // EXIT_CONFIG

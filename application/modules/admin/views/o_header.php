@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- 
+<!--
 Template Name: Metronic - Responsive Admin Dashboard Template build with Twitter Bootstrap 3.3.5
 Version: 4.1.0
 Author: KeenThemes
@@ -26,17 +26,18 @@ License: You must have a valid license purchased only from themeforest(the above
 <meta content="" name="author"/>
 <!-- BEGIN GLOBAL MANDATORY STYLES -->
 <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css"/>
-<link href="<?php echo base_url('assets/global/plugins/font-awesome/css/font-awesome.min.css') ?>" rel="stylesheet" type="text/css"> 
+<link href="<?php echo base_url('assets/global/plugins/font-awesome/css/font-awesome.min.css') ?>" rel="stylesheet" type="text/css">
 <link href="<?php echo base_url('assets/global/plugins/simple-line-icons/simple-line-icons.min.css') ?>" rel="stylesheet" type="text/css">
 <link href="<?php echo base_url('assets/global/plugins/bootstrap/css/bootstrap.min.css') ?>" rel="stylesheet" type="text/css">
 <link href="<?php echo base_url('assets/global/plugins/uniform/css/uniform.default.css') ?>" rel="stylesheet" type="text/css">
 <link href="<?php echo base_url('assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css') ?>" rel="stylesheet" type="text/css">
 <!-- END GLOBAL MANDATORY STYLES -->
 <!-- BEGIN PAGE LEVEL STYLES -->
-<link href="<?php echo base_url('assets/global/plugins/select2/select2.css') ?>" rel="stylesheet" type="text/css">
-<!--<link href="<?php //echo base_url('assets/jsinternal/datatables.min.css') ?>" rel="stylesheet" type="text/css">-->
+<link href="<?php echo base_url('assets/jsinternal/select2-4.1.0-beta.1/css/select2.min.css') ?>" rel="stylesheet" type="text/css">
+<link href="<?php echo base_url('assets/jsinternal/select2-4.1.0-beta.1/css/select2-bootstrap3.css') ?>" rel="stylesheet" type="text/css">
 <link href="<?php //echo base_url('assets/jsinternal/jquery-datatables-checkboxes/datatables.min.css') ?>" rel="stylesheet" type="text/css">
 <link href="<?php echo base_url('assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.css') ?>" rel="stylesheet" type="text/css">
+<link href="<?php //echo base_url('assets/jsinternal/datatables.min.css') ?>" rel="stylesheet" type="text/css">
 <link href="<?php echo base_url('assets/jsinternal/jquery-datatables-checkboxes/css/dataTables.checkboxes.css') ?>" rel="stylesheet" type="text/css">
 <link href="<?php echo base_url('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') ?>" rel="stylesheet" type="text/css">
 <link href="<?php echo base_url('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css') ?>" rel="stylesheet" type="text/css">
@@ -53,7 +54,7 @@ License: You must have a valid license purchased only from themeforest(the above
 <!-- BEGIN CORE PLUGINS -->
 <!--[if lt IE 9]>
 <script src="../../assets/global/plugins/respond.min.js"></script>
-<script src="../../assets/global/plugins/excanvas.min.js"></script> 
+<script src="../../assets/global/plugins/excanvas.min.js"></script>
 <![endif]-->
 <script src="<?php echo base_url('assets/global/plugins/jquery.min.js') ?>" type="text/javascript"></script>
 <script src="<?php echo base_url('assets/global/plugins/jquery-migrate.min.js') ?>" type="text/javascript"></script>
@@ -68,7 +69,7 @@ License: You must have a valid license purchased only from themeforest(the above
 <script src="<?php echo base_url('assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js') ?>" type="text/javascript"></script>
 <!-- END CORE PLUGINS -->
 <!-- BEGIN PAGE LEVEL SCRIPTS -->
-<script src="<?php echo base_url('assets/global/plugins/select2/select2.min.js') ?>" type="text/javascript"></script>
+<script src="<?php echo base_url('assets/jsinternal/select2-4.1.0-beta.1/js/select2.full.js') ?>" type="text/javascript"></script>
 <script src="<?php echo base_url('assets/jsinternal/datatables.min.js') ?>" type="text/javascript"></script>
 <script src="<?php echo base_url('assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.js') ?>" type="text/javascript"></script>
 <script src="<?php echo base_url('assets/jsinternal/jquery-datatables-checkboxes/js/dataTables.checkboxes.min.js') ?>" type="text/javascript"></script>
@@ -81,7 +82,7 @@ License: You must have a valid license purchased only from themeforest(the above
 <!--<script src="<?php //echo base_url('assets/admin/layout/scripts/quick-sidebar.js') ?>" type="text/javascript"></script>-->
 <!-- END PAGE LEVEL SCRIPTS -->
 <script>
-	jQuery(document).ready(function() {    
+	jQuery(document).ready(function() {
     Metronic.init(); // init metronic core components
 		Layout.init(); // init current layout
 	  //QuickSidebar.init(); // init quick sidebar
@@ -186,7 +187,7 @@ License: You must have a valid license purchased only from themeforest(the above
 </div>
 <!-- BEGIN CONTAINER -->
 <div class="page-container">
-	<!-- BEGIN SIDEBAR --> 	
+	<!-- BEGIN SIDEBAR -->
 	<div class="page-sidebar-wrapper">
 		<!-- DOC: Set data-auto-scroll="false" to disable the sidebar from auto scrolling/focusing -->
 		<!-- DOC: Change data-auto-speed="200" to adjust the sub menu slide up/down speed -->
@@ -223,16 +224,16 @@ License: You must have a valid license purchased only from themeforest(the above
 						</div>
 					</form>
 					<!-- END RESPONSIVE QUICK SEARCH FORM -->
-				</li>										          
-          <!-- Sidebar group -->		
-          <?php echo $this->sidebar->render(); ?>		
-          <!-- End Sidebar -->                							
+				</li>
+          <!-- Sidebar group -->
+          <?php echo $this->sidebar->render(); ?>
+          <!-- End Sidebar -->
 			</ul>
 			<!-- END SIDEBAR MENU -->
 		</div>
 	</div>
 	<!-- END SIDEBAR -->
-	
+
 	<!-- BEGIN CONTENT -->
 	<div class="page-content-wrapper">
 		<div class="page-content">
@@ -257,9 +258,9 @@ License: You must have a valid license purchased only from themeforest(the above
 				<!-- /.modal-dialog -->
 			</div>
 			<!-- /.modal -->
-			<!-- END SAMPLE PORTLET CONFIGURATION MODAL FORM-->			
-			<!-- BEGIN PAGE HEADER-->			
+			<!-- END SAMPLE PORTLET CONFIGURATION MODAL FORM-->
+			<!-- BEGIN PAGE HEADER-->
 			<div class="page-bar">
-				<?php echo $this->breadcrumbcomponent->show() ?>				
+				<?php echo $this->breadcrumbcomponent->show() ?>
 			</div>
-			<!-- END PAGE HEADER-->	
+			<!-- END PAGE HEADER-->

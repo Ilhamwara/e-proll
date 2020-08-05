@@ -14,7 +14,7 @@ class Template_model extends CI_model{
     function set_table($table) {
       $this->_table = $table;
     }
-    
+
     // Get table from table property
     function get_table() {
       $table = $this->_table;
@@ -31,14 +31,25 @@ class Template_model extends CI_model{
     }
 
     // Limit results, then offset and order by column return query
-    function get_with_limit($limit, $offset, $order_by) {
+    function get_with_limit($limit, $offset, $order_by, $dir) {
       $db = $this->_database;
       $table = $this->get_table();
       $db->limit($limit, $offset);
-      $db->order_by($order_by);
+      $db->order_by($order_by, $dir);
       $query=$db->get($table);
       return $query;
-    }    
+    }
+
+    // Limit results, then offset and order by column return query
+    function get_where_with_limit($limit, $offset, $order_by, $dir, $data) {
+      $db = $this->_database;
+      $table = $this->get_table();
+      $db->limit($limit, $offset);
+      $db->or_like($data);
+      $db->order_by($order_by, $dir);
+      $query=$db->get($table);
+      return $query;
+    }
 
     // Get where custom column is .... return query
     function get_where($col, $value) {
@@ -58,7 +69,7 @@ class Template_model extends CI_model{
       $query=$db->get($table);
       return $query;
     }
-    
+
     // Get where with multiple where conditions $data contains conditions as associative
     // array column=>condition
     function get_multiple_where($data) {
@@ -68,7 +79,7 @@ class Template_model extends CI_model{
       $query=$db->get($table);
       return $query;
     }
-    
+
     // Get where column like %match% for single where condition
     function get_where_like($column, $match) {
       $db = $this->_database;
@@ -77,16 +88,25 @@ class Template_model extends CI_model{
       $query=$db->get($table);
       return $query;
     }
-    
-    // Get where column like %match% for each $data. $data is associative array column=>match
-    function get_where_like_multiple($data) {
+
+    // Get where column like %match% for each $data. $data is associative array column=>match operator AND
+    function get_where_like_array($data) {
       $db = $this->_database;
       $table = $this->get_table();
       $db->like($data);
       $query=$db->get($table);
       return $query;
     }
-    
+
+    // Get where column like %match% for each $data. $data is associative array column=>match operator OR
+    function get_where_or_like_array($data) {
+      $db = $this->_database;
+      $table = $this->get_table();
+      $db->or_like($data);
+      $query=$db->get($table);
+      return $query;
+    }
+
     // Get where column not like %match% for single where condition
     function get_where_not_like($column, $match) {
       $db = $this->_database;
@@ -98,11 +118,26 @@ class Template_model extends CI_model{
 
     // Insert data into table $data is an associative array column=>value
     function _insert($data) {
-      $db = $this->_database;
-      $table = $this->get_table();
-      $db->insert($table, $data);
+
+      try {
+
+          $db = $this->_database;
+          $table = $this->get_table();
+          $db->insert($table, $data);
+          $db_error = $db->error();
+
+          if($db_error['code']) {
+            throw new Exception('Database error! Error Code ['.$db_error['code'].'] Error: '.$db_error['message']);
+            return false;
+          }
+
+          return true;
+      } catch (Exception $ex){
+          throw new Exception ($ex->getMessage());
+          return;
+      }
     }
-    
+
     // Insert data into table $data is an associative array column=>value
     function insert_batch($data) {
       $db = $this->database;
@@ -112,10 +147,25 @@ class Template_model extends CI_model{
 
     // Update existing row where $key = $id and data is an associative array column=>value
     function _update($key, $id, $data) {
-      $db = $this->_database;
-      $table = $this->get_table();
-      $db->where($key, $id);
-      $db->update($table, $data);
+
+      try {
+
+          $db = $this->_database;
+          $table = $this->get_table();
+          $db->where($key, $id);
+          $db->update($table, $data);
+          $db_error = $db->error();
+
+          if($db_error['code']) {
+            throw new Exception('Database error! Error Code ['.$db_error['code'].'] Error: '.$db_error['message']);
+            return false;
+          }
+
+          return true;
+      } catch (Exception $ex){
+          throw new Exception ($ex->getMessage());
+          return;
+      }
     }
 
     // Delete a row where id = $id
@@ -133,12 +183,22 @@ class Template_model extends CI_model{
       $db->where($column, $value);
       $db->delete($table);
     }
-    
+
     // Count results where column = value and return integer
     function count_where($column, $value) {
       $db = $this->_database;
       $table = $this->get_table();
       $db->where($column, $value);
+      $query=$db->get($table);
+      $num_rows = $query->num_rows();
+      return $num_rows;
+    }
+
+    // Count results where column = value and return integer
+    function count_where_like($data) {
+      $db = $this->_database;
+      $table = $this->get_table();
+      $db->or_like($data);
       $query=$db->get($table);
       $num_rows = $query->num_rows();
       return $num_rows;

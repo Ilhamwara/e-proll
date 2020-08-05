@@ -24,16 +24,26 @@ class Programs extends CI_Controller{
 
     function initialize_grid(){
 
+        $draw = $_POST['draw'];
         $top    = (isset($_POST['start']))?((int)$_POST['start']):0 ;
         $limit  = (isset($_POST['length']))?((int)$_POST['length'] ):10 ;
         $limit  = $limit+$top;
+        $o_colIndex = $_POST['order'][0]['column'];
+        $o_colName = $_POST['columns'][$o_colIndex]['data'];
+        $colSortOrder = $_POST['order'][0]['dir'];
+        $searchValue = $_POST['search']['value']; // Search value
+        $arrSearch = array(
+            'program_title' => $searchValue,
+            'program_url' => $searchValue,
+            'program_ico' => $searchValue
+        );
 
-        $rResult = $this->template_model->get_with_limit($limit, $top, '');
+        $rResult = $this->template_model->get_where_with_limit($limit, $top, $o_colName, $colSortOrder, $arrSearch);
         $rTotal = $this->template_model->count_all();
-        $rFilteredTotal = $this->template_model->count_all();
+        $rFilteredTotal = $this->template_model->count_where_like($arrSearch);
 
         $output = array(
-            "draw"              => $_POST['draw'],
+            "draw"              => $draw,
             "recordsTotal"      => $rTotal,
             "recordsFiltered"   => $rFilteredTotal,
             "data"              => array()
@@ -58,52 +68,37 @@ class Programs extends CI_Controller{
 
     function controller_gridlist(){
 
+        //$this->session->sess_destroy();
+
+        $result = new \stdClass;
+
         $vResult = $this->initialize_grid();
         $rResult = $vResult['rResult'];
-    	  $output = $vResult['output'];
+        $output = $vResult['output'];
 
         $rownum=0;
-        foreach($rResult->result() as $eRow)
-        {
-            $id = $eRow->program_id;
-
+        foreach($rResult->result() as $eRow){
             $menu='
-                  <a data-toggle="collapse" href="#form-collapse" title="Edit" class="btn-edit">
+                  <a title="Edit" class="btn-edit">
                     <i class="glyphicon glyphicon-edit font-blue-ebonyclay"></i>
                   </a>
                   ';
 
             $row = array();
-            $row[]= $rownum;
-            $row[]= $menu;
-            $row[]= '<td class="primaykey>'.$eRow->program_id.'</td>';
-            $row[]= $eRow->program_group_id;
-            $row[]= $eRow->program_title;
-            $row[]= $eRow->program_url;
-            $row[]= $eRow->program_ico;
-            $row[]= $eRow->program_class;
+            $row['rownum']= $rownum;
+            $row['menu']= $menu;
+            $row['program_id']= $eRow->program_id;
+            $row['program_group_id']= $eRow->program_group_id;
+            $row['program_title']= $eRow->program_title;
+            $row['program_url']= $eRow->program_url;
+            $row['program_ico']= $eRow->program_ico;
+            $row['program_class']= $eRow->program_class;
             $rownum++;
 
             if (!empty($row)) { $output['data'][] = $row; }
         }
 
-      echo json_encode($output);
-    }
-
-    function programs_add(){
-
-        $this->breadcrumbcomponent->add('Programs','programs/programs_list');
-        $this->breadcrumbcomponent->add('Add','programs/programs_add');
-
-        $data['region'] = $this->region_select();
-        $data['divisi'] = $this->divisi_select();
-        $data['jabatan'] = $this->jabatan_select();
-        $data['golongan'] = $this->golongan_select();
-
-        $this->load->view("admin/o_header");
-        $this->load->view("programs/programs_add", $data);
-        $this->load->view("admin/o_footer");
-
+        echo json_encode($output);
     }
 
     function programs_save(){
@@ -124,6 +119,7 @@ class Programs extends CI_Controller{
             }
 
             $this->db->trans_begin();
+            //$this->db->trans_start(FALSE);
 
             try {
 
@@ -138,25 +134,17 @@ class Programs extends CI_Controller{
                     //$oHeader->_createdate = date("Y-m-d H:i:s");
                     $this->template_model->_insert($oHeader);
                     //$this->db->trans_complete();
-                    $db_error = $this->db->error();
                 } else {
                     /** Update data */
-                    print 'update';
+                    $this->template_model->_update($primarykey, $oHeader[$primarykey], $oHeader);
                 }
 
-                //print_r($db_error);exit;
-
-                if($this->db->trans_status() === false) {
-                  throw new Exception('Database error! Error Code ['.$db_error['code'].'] Error: '.$db_error['message']);
-                  return false;
-                }
                 $this->db->trans_commit();
-                //return true;
                 $result = array('status' => true, 'id' => $oHeader[$primarykey], 'message' => 'Success');
             } catch (Exception $e) {
                 //log_message('error: ',$e->getMessage());
                 $this->db->trans_rollback();
-                $result = array('status' => false, 'id' => $oHeader[$primarykey], 'message' => 'errror');
+                $result = array('status' => false, 'id' => $oHeader[$primarykey], 'message' => $e->getMessage());
                 return;
             } finally {
               echo json_encode($result);
@@ -168,60 +156,37 @@ class Programs extends CI_Controller{
         return uniqid();
     }
 
-    function employee_edit(){
+    function programs_retrieve(){
 
-        $id = $this->uri->segment(3);
+        $result = new \stdClass;
 
-        $data = array(
-                  'result'      => $this->employee_select('employee_id', $id),
-                  'employee_id' => $id
-                );
+        $username = $this->session->userdata('username');
+        $primarykey = 'program_id';
 
-        $this->breadcrumbcomponent->add('Employee','employee/employee_list');
-        $this->breadcrumbcomponent->add('Edit','employee/employee_edit');
-        $this->sidebar->set_active('Employee');
+        if (isset($_POST["action"]) && !empty($_POST["action"])) {
+            $val = $_POST[$primarykey];
 
-        $data['region'] = $this->region_select();
-        $data['divisi'] = $this->divisi_select();
-        $data['jabatan'] = $this->jabatan_select();
-        $data['golongan'] = $this->golongan_select();
-        $data['sex'] = $this->sex_select();
-        $data['agama'] = $this->agama_select();
-        $data['status'] = $this->status_select();
-        $data['spajak'] = $this->spajak_select();
-        $data['bank'] = $this->bank_select();
+            try {
 
-        $this->load->view("admin/o_header");
-        $this->load->view("employee/employee_edit", $data);
-        $this->load->view("admin/o_footer");
+                $SQL = $this->template_model->get_where($primarykey, $val);
+                $row = $SQL->result();
 
-    }
+                $record = [];
 
-    function employee_modify(){
+                foreach ($row as $key => $value){
+                    $record[$key] = $value;
+                }
+                $record[0]->program_group_name = $this->groups_select_id($record[0]->program_group_id, 'group_id', 'group_name');
 
-      //print_r($_POST);exit;
-      if ($_POST)
-      {
-          $EDITDATA = $_POST;
+                $result->record = $record;
+                $result->status = true;
+                //$result->record = $record;
+                echo json_encode($result);
 
-          //$employee_id = generate_id_string('EP', 6, 'master_seq');
-          //$NEWDATA['employee_id'] = $employee_id;
-          $employee_id = $EDITDATA['employee_id'];
-
-          $employee_tglahir = inputmask_todate($EDITDATA['employee_tglahir']);
-          $EDITDATA['employee_tglahir'] = $employee_tglahir;
-
-          $employee_start = date('Y-m-d', strtotime($EDITDATA['employee_start']));
-          $EDITDATA['employee_start'] = $employee_start;
-
-          $employee_end = date('Y-m-d', strtotime($EDITDATA['employee_end']));
-          $EDITDATA['employee_end'] = $employee_end;
-
-          $this->template_model->_update('employee_id', $employee_id, $EDITDATA);
-
-        redirect("employee/employee_list");
-      }
-
+            } catch (Exception $ex) {
+                throw $ex;
+            }
+        }
     }
 
     function employee_select($id, $value){
@@ -244,6 +209,42 @@ class Programs extends CI_Controller{
         }
 
         return $options;
+    }
+
+    function groups_select(){
+
+        $this->template_model->set_table('master_group');
+
+        $rSearch = empty($_GET['term']) ? '' : $_GET['term'];
+
+        if (is_array($rSearch) && $rSearch['_type'] == 'query'){
+
+           $term = '';
+           if (isset($rSearch['term'])) { $term = $rSearch['term']; };
+
+           $arrSearch = array('group_id' => $term, 'group_name' => $term);
+           $rGroups = $this->template_model->get_where_or_like_array($arrSearch);
+           $items = $rGroups->result();
+           $result['items']= $items;
+
+           echo json_encode($result);
+        }
+    }
+
+    function groups_select_id($value, $id, $name){
+
+        $this->template_model->set_table('master_group');
+
+        $SQL = $this->template_model->get_where($id, $value);
+        $row = $SQL->result();
+        $record = [];
+        foreach ($row as $key => $value){
+            $record[$key] = $value;
+        }
+
+        $result = $record[0]->$name;
+
+        return $result;
     }
 
     function divisi_select(){
