@@ -184,12 +184,11 @@ CREATE TABLE IF NOT EXISTS `master_program` (
   CONSTRAINT `FK_master_program_master_group` FOREIGN KEY (`program_group_id`) REFERENCES `master_group` (`group_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table pr01_db.master_program: ~17 rows (approximately)
+-- Dumping data for table pr01_db.master_program: ~23 rows (approximately)
 DELETE FROM `master_program`;
 /*!40000 ALTER TABLE `master_program` DISABLE KEYS */;
 INSERT INTO `master_program` (`program_id`, `program_group_id`, `program_title`, `program_url`, `program_ico`, `program_class`, `program_dir`, `_createby`, `_createdate`, `_modifyby`, `_modifydate`) VALUES
 	('1', 3, 'E.01 List Employee', 'employee/employee_list', 'fa fa-users', 'employesss', NULL, NULL, NULL, NULL, NULL),
-	('2', 1, 'S.01 Modul', 'program/program_list', 'fa fa-setting', 'programs', NULL, NULL, NULL, NULL, NULL),
 	('3', 1, 'S.02 Group', 'group/group_list', 'fa fa-group', 'group', NULL, NULL, NULL, NULL, NULL),
 	('4', 1, 'S.01 Programs', 'programs/programs_list', 'fa fa-setting', 'programs', NULL, NULL, NULL, NULL, NULL),
 	('5', 1, 'S.03 Users', 'user/user_list', 'fa fa-users', 'users', NULL, NULL, NULL, NULL, NULL),
@@ -204,13 +203,7 @@ INSERT INTO `master_program` (`program_id`, `program_group_id`, `program_title`,
 	('5f29eb3021769', 5, '\'\'\'\'\'\'', '', NULL, '', NULL, NULL, '2020-08-05 06:11:44', NULL, NULL),
 	('5f29eb3428b33', 5, '\'\'\'\'\'\'', '', NULL, '', NULL, NULL, '2020-08-05 06:11:48', NULL, NULL),
 	('5f29ec63bd826', 3, 'Absen', '', NULL, '', NULL, NULL, '2020-08-05 06:16:51', NULL, NULL),
-	('5f29ed1615a69', 1, 'Coba Lagi', '', NULL, '', NULL, NULL, '2020-08-05 06:19:50', NULL, NULL),
-	('5f29f2890231f', 1, '', '', NULL, '', NULL, NULL, '2020-08-05 06:43:05', NULL, NULL),
-	('5f2a085983ada', 2, '', '', NULL, '', NULL, NULL, '2020-08-05 08:16:09', NULL, NULL),
-	('5f2a29684a38d', 2, '', '', NULL, '', NULL, NULL, '2020-08-05 10:37:12', NULL, NULL),
-	('5f2a299e85aff', 2, '', '', NULL, '', NULL, NULL, '2020-08-05 10:38:06', NULL, NULL),
-	('5f2a29b087b9e', 2, '', '', NULL, '', NULL, NULL, '2020-08-05 10:38:24', NULL, NULL),
-	('5f2a29c7a5da7', 2, '', '', NULL, '', NULL, NULL, '2020-08-05 10:38:47', NULL, NULL);
+	('5f29ed1615a69', 1, 'Coba Lagi', '', NULL, '', NULL, NULL, '2020-08-05 06:19:50', NULL, NULL);
 /*!40000 ALTER TABLE `master_program` ENABLE KEYS */;
 
 -- Dumping structure for table pr01_db.master_region
