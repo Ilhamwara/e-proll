@@ -61,7 +61,7 @@ class Programs extends CI_Controller{
         $this->breadcrumbcomponent->add('List','#');
 
         $this->load->view("admin/o_header");
-        $this->load->view("programs/programs_list");
+        $this->load->view("programs/programs_view");
         $this->load->view("admin/o_footer");
         $this->load->view("programs/programs_js");
     }
