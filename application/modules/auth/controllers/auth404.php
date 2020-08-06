@@ -15,6 +15,9 @@ class Auth404 extends CI_Controller{
 
         $this->breadcrumbcomponent->add('404','');
 
+        //$data['heading'] = "404 Page Not Found";
+        //$data['message'] = "We are sorry the page you ar looking for does not exist."
+
         $this->load->view('admin/o_header');
         $this->load->view('auth/404_view');
         $this->load->view('admin/o_footer');

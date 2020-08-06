@@ -80,7 +80,7 @@ class Programs extends CI_Controller{
         $rownum=0;
         foreach($rResult->result() as $eRow){
             $menu='
-                  <a title="Edit" class="btn-edit" href="#">
+                  <a title="Edit" class="btn-edit">
                     <i class="glyphicon glyphicon-edit font-blue-ebonyclay"></i>
                   </a>
                   ';
