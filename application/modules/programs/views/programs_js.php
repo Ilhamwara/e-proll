@@ -1,4 +1,5 @@
 <script>
+
   $(document).ready(function() {
 
     var oTable = $('#programsTable').DataTable({
@@ -74,6 +75,12 @@
     })
 
     $('#programsTable').on('click', '.btn-edit', function(e) {
+
+        e.preventDefault();
+
+        //$('html,body').animate({scrollTop:$(this.hash).offset().top}, 500);
+        //$('html,body').animate({scrollTop:($(this).position()).top}, 500);
+        Metronic.scrollTop();
 
         $('#form-collapse').collapse('show');
 
@@ -170,9 +177,16 @@
 
       save(url, oForm)
         .then( function (result){
-
-            console.log(result);
-        });
+            //console.log(result);
+            if (!result.status){
+                Metronic.alert({type: 'danger', icon: 'warning', message: result.message, place: 'prepend'});
+            } else {
+               obj.program_id.val(result.id);
+               oTable.ajax.reload( null, false );
+               Metronic.alert({type: 'success', icon: 'check', message: `Data '`+result.id+`' has been saved.`, place: 'prepend', closeInSeconds: 3});
+               obj.datastate = 'update';
+            }
+        })
 /***
       $.ajax({
           url      : "<?php //echo site_url('programs/programs_save');?>",
@@ -225,7 +239,7 @@
     });
 
     $('#program_group_id').select2({
-        minimumInputLength: 2,
+        minimumInputLength: 0,
         allowClear: true,
         placeholder: 'Select an Option',
         ajax: {

@@ -31,7 +31,7 @@ table.dataTable tbody tr.selected {
 <div class="row">
   <div class="col-md-12">
     <div class="portlet light">
-      <div class="portlet-title">
+      <div class="portlet-title" id='portlet_top'>
         <div class="caption">
           <i class="fa fa-gift"></i>Master Programs (Bootstrap)
         </div>

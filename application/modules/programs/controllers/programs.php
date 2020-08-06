@@ -6,6 +6,7 @@ class Programs extends CI_Controller{
 
         parent::__construct();
 
+        //print_r($this->session->userdata);exit;
         if ( ! $this->session->userdata('authenticated'))
         {
             redirect('auth');
@@ -79,7 +80,7 @@ class Programs extends CI_Controller{
         $rownum=0;
         foreach($rResult->result() as $eRow){
             $menu='
-                  <a title="Edit" class="btn-edit">
+                  <a title="Edit" class="btn-edit" href="#">
                     <i class="glyphicon glyphicon-edit font-blue-ebonyclay"></i>
                   </a>
                   ';
