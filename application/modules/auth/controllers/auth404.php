@@ -5,6 +5,11 @@ class Auth404 extends CI_Controller{
     public function __construct(){
         parent::__construct();
 
+        if ( ! $this->session->userdata('authenticated'))
+        {
+            redirect('auth');
+        }
+
         $this->load->library('breadcrumbcomponent');
         $this->load->library('sidebar');
     }
