@@ -35,7 +35,6 @@ class Template_model extends CI_model{
       $db = $this->_database;
       $table = $this->get_table();
       $db->limit($limit, $offset);
-      $db->order_by($order_by, $dir);
       $query=$db->get($table);
       return $query;
     }

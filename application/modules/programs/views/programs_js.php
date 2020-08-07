@@ -45,7 +45,8 @@
       program_title: $('#program_title'),
       program_url: $('#program_url'),
       program_class: $('#program_class'),
-      datastate: 'insert'
+      datastate: 'insert',
+      autoid: true
     }
 
     //console.log(oTable);
@@ -54,12 +55,7 @@
       $('#form-collapse').collapse('show');
       oTable.rows( '.selected' ).nodes().to$().removeClass( 'selected' );
 
-      let oForm={
-          'primarykey': obj.program_id,
-          'autoid': true
-      }
-
-      if (oForm.autoid) {
+      if (obj.autoid) {
         obj.program_id.prop('readonly', true);
       }else{
         obj.program_id.prop('readonly', false);
@@ -74,28 +70,42 @@
 
     })
 
+    $('#form-collapse').on('shown.bs.collapse', function () {
+      // do something…
+      console.log('lewat show');
+      $('#btn_save').prop('disabled', false);
+    })
+
+    $('#form-collapse').on('hidden.bs.collapse', function () {
+      // do something…
+      console.log($('.btn-save'));
+      $('#btn_save').prop('disabled', true);
+
+    })
+
     $('#programsTable').on('click', '.btn-edit', function(e) {
 
-        e.preventDefault();
+        //e.preventDefault();
+        let oForm={};
 
-        //$('html,body').animate({scrollTop:$(this.hash).offset().top}, 500);
-        //$('html,body').animate({scrollTop:($(this).position()).top}, 500);
         Metronic.scrollTop();
 
         $('#form-collapse').collapse('show');
 
-        let oForm={
-            "action": "update"
-        };
+        if (obj.autoid) {
+          obj.program_id.prop('readonly', true);
+        }else{
+          obj.program_id.prop('readonly', false);
+        }
 
+        obj.datastate = 'update';
         primarykey = $(this).closest('tr').find('.primarykey').text();
 
         oTable.rows( '.selected' ).nodes().to$().removeClass( 'selected' );
         $(this).closest('tr').toggleClass('selected');
 
         oForm['program_id'] = primarykey;
-        obj.datastate = 'update';
-
+        oForm['action'] = obj.datastate;
         url = "<?php echo site_url('programs/programs_retrieve');?>";
 
         retrive(url, oForm)
@@ -156,7 +166,7 @@
       //oTable.rows('.selected').deselect();
     })
 
-    $('#form').submit( function (e){
+    $('#btn_save').on('click', function (e){
 
       let oForm={};
       //alert('test');
@@ -169,7 +179,7 @@
       };
 
       oForm['detil'] = [];
-      oForm['options'] = {'autoid': true};
+      oForm['options'] = {'autoid': obj.autoid};
       oForm['action'] = obj.datastate;
       //console.log(oForm);
 
@@ -187,55 +197,6 @@
                obj.datastate = 'update';
             }
         })
-/***
-      $.ajax({
-          url      : "<?php //echo site_url('programs/programs_save');?>",
-          type     : 'POST',
-          data     : oForm,
-          dataType : 'json',
-          success: function(e) {
-            //console.log(e);
-            if (!e.status){
-              Metronic.alert({
-                  type: 'danger',
-                  icon: 'warning',
-                  message: e.message,
-                  place: 'prepend'
-              });
-            } else {
-              obj.program_id.val(e.id);
-              oTable.ajax.reload( null, false );
-              //display_modal('Success!', `Data '`+e.id+`' has been saved.`);
-              Metronic.alert({
-                  type: 'success',
-                  icon: 'check',
-                  message: `Data '`+e.id+`' has been saved.`,
-                  place: 'prepend',
-                  closeInSeconds: 3
-              });
-            }
-          },
-          error: function(xhr) {
-              if (xhr.status == 500) {
-                  //display_modal('Internal error:',`[ERROR] Eksekusi API Error`);
-                  Metronic.alert({
-                      type: 'danger',
-                      icon: 'warning',
-                      message: `Internal Error: [ERROR] Eksekusi API Error `+xhr.responseText,
-                      place: 'prepend'
-                  });
-              } else {
-                  Metronic.alert({
-                      type: 'danger',
-                      icon: 'warning',
-                      message: `[ERROR] Eksekusi API Error `+xhr.responseText,
-                      place: 'prepend'
-                  });
-              }
-          }
-      });
-**/
-      e.preventDefault();
     });
 
     $('#program_group_id').select2({

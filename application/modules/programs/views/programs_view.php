@@ -38,16 +38,16 @@ table.dataTable tbody tr.selected {
         <div class="actions">
           <a id="form-cancel" class="btn default"><i class="fa fa-angle-left"></i> Back</a>
           <a  class="btn btn-create blue-madison">Create</a>
+          <button id="btn_save"  type="button" class="btn btn-save blue-madison" disabled>
+            <i class="fa fa-check"></i> Save
+          </button>
           <div class="btn-group">
             <a href="#" class="btn blue-madison dropdown-toggle"  data-toggle="dropdown" aria-expanded="false">Action
               <i class="fa fa-angle-down"></i>
             </a>
             <ul class="dropdown-menu pull-right">
               <li>
-                <a id='test' href="javascript:;"> Submit </a>
-              </li>
-              <li>
-                <a href="javascript:;"></i> Delete </a>
+                <a href="javascript:;"><i class="fa fa-trash-o"></i> Delete </a>
               </li>
               <li>
                 <a id='test' href="javascript:;"> Export </a>
@@ -65,7 +65,7 @@ table.dataTable tbody tr.selected {
   					<a href="#tab_record" data-toggle="tab">Record </a>
   				</li>
           <li>
-  					<a href="#tab_log" data-toggle="tab">History </a>
+  					<a href="#tab_log" data-toggle="tab">Log </a>
   				</li>
 				</ul>
 				<div class="tab-content">
@@ -122,55 +122,35 @@ table.dataTable tbody tr.selected {
             <form id="form-record" class="form-horizontal">
               <div class="form-body">
                 <div class="form-group">
-                  <label class="col-md-2 control-label">Create By</label>
-                  <div class="col-md-4">
-                    <input id="_createby" type="text" class="form-control" >
-                  </div>
-                </div>
+									<label class="control-label col-md-2">Create By:</label>
+									<div class="col-md-4">
+										<p class="form-control-static">Admin</p>
+									</div>
+								</div>
                 <div class="form-group">
-                  <label class="col-md-2 control-label">Create Date</label>
-                  <div class="col-md-4">
-                    <input id="_createdate" type="text" class="form-control">
-                  </div>
-                </div>
+									<label class="control-label col-md-2">Create Date:</label>
+									<div class="col-md-4">
+										<p class="form-control-static">2020-08-06</p>
+									</div>
+								</div>
                 <div class="form-group">
-                  <label class="col-md-2 control-label">Modify By</label>
-                  <div class="col-md-4">
-                    <input id="_modifyby" type="text" class="form-control" >
-                  </div>
-                </div>
+									<label class="control-label col-md-2">Modify By:</label>
+									<div class="col-md-4">
+										<p class="form-control-static">Admin</p>
+									</div>
+								</div>
                 <div class="form-group">
-                  <label class="col-md-2 control-label">Modify Date</label>
-                  <div class="col-md-4">
-                    <input id="_modifydate" type="text" class="form-control" >
-                  </div>
-                </div>
+									<label class="control-label col-md-2">Modify Date:</label>
+									<div class="col-md-4">
+										<p class="form-control-static">2020-08-06</p>
+									</div>
+								</div>
               </div>
             </form>
 					</div>
           <div class="tab-pane fade" id="tab_log">
 					</div>
 				</div>
-        <div class="actions">
-          <a id="form-cancel" class="btn default btn-sm"><i class="fa fa-angle-left"></i> Back</a>
-          <a  class="btn btn-create blue-madison">Create</a>
-          <div class="btn-group">
-            <a href="#" class="btn blue-madison dropdown-toggle"  data-toggle="dropdown" aria-expanded="false">Action
-              <i class="fa fa-angle-down"></i>
-            </a>
-            <ul class="dropdown-menu pull-right">
-              <li>
-                <a id='test' href="javascript:;"> Submit </a>
-              </li>
-              <li>
-                <a href="javascript:;"></i> Delete </a>
-              </li>
-              <li>
-                <a id='test' href="javascript:;"> Export </a>
-              </li>
-            </ul>
-          </div>
-        </div>
       </div>
       <div class="portlet-body" style="display: block;">
         <table class="table table-hover text-nowrap" id='programsTable' cellspacing=0 width="100%">

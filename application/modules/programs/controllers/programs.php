@@ -28,7 +28,7 @@ class Programs extends CI_Controller{
         $draw = $_POST['draw'];
         $top    = (isset($_POST['start']))?((int)$_POST['start']):0 ;
         $limit  = (isset($_POST['length']))?((int)$_POST['length'] ):10 ;
-        $limit  = $limit+$top;
+        //$limit  = $limit+$top;
         $o_colIndex = $_POST['order'][0]['column'];
         $o_colName = $_POST['columns'][$o_colIndex]['data'];
         $colSortOrder = $_POST['order'][0]['dir'];
@@ -40,6 +40,7 @@ class Programs extends CI_Controller{
         );
 
         $rResult = $this->template_model->get_where_with_limit($limit, $top, $o_colName, $colSortOrder, $arrSearch);
+
         $rTotal = $this->template_model->count_all();
         $rFilteredTotal = $this->template_model->count_where_like($arrSearch);
 
@@ -76,6 +77,8 @@ class Programs extends CI_Controller{
         $vResult = $this->initialize_grid();
         $rResult = $vResult['rResult'];
         $output = $vResult['output'];
+
+        //print_r($rResult->result_array());exit;
 
         $rownum=0;
         foreach($rResult->result() as $eRow){
