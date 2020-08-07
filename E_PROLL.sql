@@ -134,18 +134,22 @@ CREATE TABLE IF NOT EXISTS `master_group` (
   `group_descr` varchar(200) DEFAULT NULL,
   `group_ico` varchar(200) DEFAULT NULL,
   `group_order` int(11) DEFAULT 0,
+  `_createby` varchar(50) DEFAULT NULL,
+  `_createdate` datetime DEFAULT current_timestamp(),
+  `_modifyby` varchar(50) DEFAULT NULL,
+  `_modifydate` datetime DEFAULT NULL,
   PRIMARY KEY (`group_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 -- Dumping data for table pr01_db.master_group: ~5 rows (approximately)
 DELETE FROM `master_group`;
 /*!40000 ALTER TABLE `master_group` DISABLE KEYS */;
-INSERT INTO `master_group` (`group_id`, `group_name`, `group_descr`, `group_ico`, `group_order`) VALUES
-	(1, 'Setting', NULL, 'icon-settings', 0),
-	(2, 'Master Data', NULL, 'icon-briefcase', 0),
-	(3, 'Employee', NULL, 'icon-users', 0),
-	(4, 'Payroll', NULL, 'icon-wallet', 0),
-	(5, 'Report', NULL, 'icon-bar-chart', 0);
+INSERT INTO `master_group` (`group_id`, `group_name`, `group_descr`, `group_ico`, `group_order`, `_createby`, `_createdate`, `_modifyby`, `_modifydate`) VALUES
+	(1, 'Setting', NULL, 'icon-settings', 0, NULL, NULL, NULL, NULL),
+	(2, 'Master Data', NULL, 'icon-briefcase', 0, NULL, NULL, NULL, NULL),
+	(3, 'Employee', NULL, 'icon-users', 0, NULL, NULL, NULL, NULL),
+	(4, 'Payroll', NULL, 'icon-wallet', 0, NULL, NULL, NULL, NULL),
+	(5, 'Report', NULL, 'icon-bar-chart', 0, NULL, NULL, NULL, NULL);
 /*!40000 ALTER TABLE `master_group` ENABLE KEYS */;
 
 -- Dumping structure for table pr01_db.master_jabatan
@@ -184,26 +188,32 @@ CREATE TABLE IF NOT EXISTS `master_program` (
   CONSTRAINT `FK_master_program_master_group` FOREIGN KEY (`program_group_id`) REFERENCES `master_group` (`group_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table pr01_db.master_program: ~23 rows (approximately)
+-- Dumping data for table pr01_db.master_program: ~21 rows (approximately)
 DELETE FROM `master_program`;
 /*!40000 ALTER TABLE `master_program` DISABLE KEYS */;
 INSERT INTO `master_program` (`program_id`, `program_group_id`, `program_title`, `program_url`, `program_ico`, `program_class`, `program_dir`, `_createby`, `_createdate`, `_modifyby`, `_modifydate`) VALUES
 	('1', 3, 'E.01 List Employee', 'employee/employee_list', 'fa fa-users', 'employesss', NULL, NULL, NULL, NULL, NULL),
 	('3', 1, 'S.02 Group', 'group/group_list', 'fa fa-group', 'group', NULL, NULL, NULL, NULL, NULL),
-	('4', 1, 'S.01 Programs', 'programs/programs_list', 'fa fa-setting', 'programs', NULL, NULL, NULL, NULL, NULL),
+	('4', 1, 'Master Program', 'programs/programs_list', 'fa fa-setting', 'programs', NULL, NULL, NULL, NULL, NULL),
 	('5', 1, 'S.03 Users', 'user/user_list', 'fa fa-users', 'users', NULL, NULL, NULL, NULL, NULL),
-	('5f27df801bbf1', 2, 'Program 2', 'Program', NULL, 'Program ', NULL, NULL, NULL, NULL, NULL),
-	('5f280ee897279', 1, 'Master Onyon', 'dsad', NULL, 'dsad', NULL, NULL, NULL, NULL, NULL),
+	('5f27df801bbf1', 2, 'Program 2', 'programs/programs_list', NULL, 'Program ', NULL, NULL, NULL, NULL, NULL),
+	('5f280ee897279', 1, 'Master Role', 'role/role_list', NULL, 'role', NULL, NULL, NULL, NULL, NULL),
 	('5f28124f2035d', 1, 'Programs', 'programs/programs_list', NULL, 'program', NULL, NULL, '2020-08-03 20:34:07', NULL, NULL),
 	('5f2817520a6e6', 4, 'Gaji', 'Gaji Juga', NULL, 'dede', NULL, NULL, '2020-08-03 20:55:30', NULL, NULL),
 	('5f28176c85026', 4, 'Tunjangan Jabatan', 'tunjangan', NULL, 'tunjangan', NULL, NULL, '2020-08-03 20:55:56', NULL, NULL),
 	('5f28178b74548', 4, 'Tunjangan anak istri', '', NULL, '', NULL, NULL, '2020-08-03 20:56:27', NULL, NULL),
-	('5f2904cb7f378', 2, 'oke', '', NULL, '', NULL, NULL, '2020-08-04 13:48:43', NULL, NULL),
-	('5f29eb2448722', 5, '\'\'\'\'\'\'', '', NULL, '', NULL, NULL, '2020-08-05 06:11:32', NULL, NULL),
-	('5f29eb3021769', 5, '\'\'\'\'\'\'', '', NULL, '', NULL, NULL, '2020-08-05 06:11:44', NULL, NULL),
-	('5f29eb3428b33', 5, '\'\'\'\'\'\'', '', NULL, '', NULL, NULL, '2020-08-05 06:11:48', NULL, NULL),
 	('5f29ec63bd826', 3, 'Absen', '', NULL, '', NULL, NULL, '2020-08-05 06:16:51', NULL, NULL),
-	('5f29ed1615a69', 1, 'Coba Lagi', '', NULL, '', NULL, NULL, '2020-08-05 06:19:50', NULL, NULL);
+	('5f2a6f39e25cc', 5, 'Karoro', 'dsadas', NULL, 'dasd', NULL, NULL, '2020-08-05 15:35:05', NULL, NULL),
+	('5f2a84c5dd6bd', 5, 'General Ledger', 'ledger/ledger_list', NULL, 'ledger', NULL, NULL, '2020-08-05 17:07:01', NULL, NULL),
+	('5f2af64dbe22c', 2, 'Coba lagi', '', NULL, '', NULL, NULL, '2020-08-06 01:11:25', NULL, NULL),
+	('5f2af7625538c', 1, 'Master Setting', '', NULL, '', NULL, NULL, '2020-08-06 01:16:02', NULL, NULL),
+	('5f2af792813c6', 4, 'Jangan Menyerah', '', NULL, '', NULL, NULL, '2020-08-06 01:16:50', NULL, NULL),
+	('5f2af88f5b672', 1, 'sasa', 'sas', NULL, '', NULL, NULL, '2020-08-06 01:21:03', NULL, NULL),
+	('5f2af920818b3', 1, 'jelek', 'sad', NULL, 'oke', NULL, NULL, '2020-08-06 01:23:28', NULL, NULL),
+	('5f2b8a768668a', 2, 'Neraca/ Laba Rugi', 'rpt/ rptclass', NULL, 'rpts', NULL, NULL, '2020-08-06 11:43:34', NULL, NULL),
+	('5f2c178022927', 5, 'Laporan Gaji Bulanan', 'gaji/ gaji_list', NULL, 'gaji', NULL, NULL, '2020-08-06 21:45:20', NULL, NULL),
+	('5f2cb36af0fd5', 4, 'Program Baru Banget', 'Baru', NULL, '', NULL, NULL, '2020-08-07 08:50:34', NULL, NULL),
+	('5f2cc56428af3', 2, 'Program 3', 'programsss', NULL, 'progams3', NULL, NULL, '2020-08-07 10:07:16', NULL, NULL);
 /*!40000 ALTER TABLE `master_program` ENABLE KEYS */;
 
 -- Dumping structure for table pr01_db.master_region
@@ -281,14 +291,18 @@ CREATE TABLE IF NOT EXISTS `master_user` (
   `username` varchar(50) DEFAULT NULL,
   `user_fullname` varchar(250) DEFAULT NULL,
   `password` varchar(50) DEFAULT NULL,
+  `_createby` varchar(50) DEFAULT NULL,
+  `_createdate` datetime DEFAULT current_timestamp(),
+  `_modifyby` varchar(50) DEFAULT NULL,
+  `_modifydate` datetime DEFAULT NULL,
   PRIMARY KEY (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table pr01_db.master_user: ~1 rows (approximately)
+-- Dumping data for table pr01_db.master_user: ~2 rows (approximately)
 DELETE FROM `master_user`;
 /*!40000 ALTER TABLE `master_user` DISABLE KEYS */;
-INSERT INTO `master_user` (`user_id`, `username`, `user_fullname`, `password`) VALUES
-	('1', 'nacha', 'Abdul Nasrah', 'ac43724f16e9241d990427ab7c8f4228');
+INSERT INTO `master_user` (`user_id`, `username`, `user_fullname`, `password`, `_createby`, `_createdate`, `_modifyby`, `_modifydate`) VALUES
+	('1', 'nacha', 'Abdul Nasrah', 'ac43724f16e9241d990427ab7c8f4228', NULL, '2020-08-05 14:49:34', NULL, NULL);
 /*!40000 ALTER TABLE `master_user` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
